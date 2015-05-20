@@ -1,0 +1,5 @@
+packagePath=com.jd.bx.yy.export
+velocityName=Export.vm
+fileExtendName=Export
+fileType=java
+srcTargetChildPath=insurance-yy-export/src/main/java
