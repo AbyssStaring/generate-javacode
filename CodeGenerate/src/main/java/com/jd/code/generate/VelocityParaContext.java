@@ -101,6 +101,7 @@ public class VelocityParaContext {
             }
         }
         getMYSQLIndexField(conn, tableName);
+        getMYSQLTableComment(conn, tableName);
         commonContext.put(Constant.FIELDS, fields);
         commonContext.put(Constant.PK_TYPE, pkType);
         commonContext.put(Constant.IMPORTS, imports);
@@ -183,9 +184,29 @@ public class VelocityParaContext {
         }
         commonContext.put(Constant.Unique_index,uniqueIndexMultiMap);
         commonContext.put(Constant.Common_index,commonIndexMultiMap);
-        List<Field> fields = (List<Field>) commonIndexMultiMap.get("merchantId_index");
         pstmt.close();
         return pkField;
+    }
+
+    /*
+* 得到MYSQL表的注释
+*/
+    public   void getMYSQLTableComment(Connection conn, String tableName) throws SQLException {
+        PreparedStatement pstmt;
+        //pstmt = conn.prepareStatement(" select table_comment from information_schema.tables where table_name=' " + tableName +"'");//命令行里可用
+        pstmt = conn.prepareStatement("show create table "+tableName);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            String allInfo = rs.getString(2);
+            int startIndex = allInfo.indexOf("COMMENT='");
+            if(startIndex<0)
+                return;
+            String comment = allInfo.substring(startIndex+9);
+            comment = comment.substring(0,comment.length()-1);
+            commonContext.put(Constant.TABLE_COMMENT,comment);
+        }
+        pstmt.close();
     }
 
     /*
@@ -208,6 +229,7 @@ public class VelocityParaContext {
        static   String CLASS_NAME = "className";
         static  String TABLE_NAME = "tableName";
         static  String INST_NAME = "instName";
+        static  String TABLE_COMMENT = "tableComment";
         static String IMPORTS = "imports";
         static String AUTHOR = "author";
         static String PK_ID = "pkid";

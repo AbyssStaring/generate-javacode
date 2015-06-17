@@ -1,6 +1,6 @@
 package $!{package};
-import com.jd.bx.yy.service.BaseService;
-import com.jd.bx.yy.domain.$!{className};
+import com.jd.jr.simpleconfig.service.BaseService;
+import com.jd.jr.simpleconfig.domain.$!{className};
 public interface $!{className}Service  extends BaseService<$!{className}>{
 
 #foreach($index in ${uniqueIndex.keySet()})

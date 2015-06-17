@@ -1,5 +1,5 @@
-packagePath=com.jd.bx.yy.export
+packagePath=com.jd.jr.simpleconfig.export
 velocityName=Export.vm
 fileExtendName=Export
 fileType=java
-srcTargetChildPath=insurance-yy-export/src/main/java
+srcTargetChildPath=simpleConfigCenter-export/src/main/java

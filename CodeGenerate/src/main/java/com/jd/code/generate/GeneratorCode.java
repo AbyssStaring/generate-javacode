@@ -143,13 +143,13 @@ public class GeneratorCode {
                 velocityParameterMap.put("parameterMap", "parameterMap");
                 velocityParameterMap.put("excludeFieldsMap",excludeFieldsMap);
                 velocityParameterMap.put("package", fileConfig.getPackagePath());
-                velocityParameterMap.put("importBean","com.jd.bx.yy.domain." + (String) velocityParameterMap.get("className"));
-                velocityParameterMap.put("importService","com.jd.bx.yy.service." + (String) velocityParameterMap.get("className")+"Service");
-                velocityParameterMap.put("importMapper","com.jd.bx.yy.dao." + (String) velocityParameterMap.get("className")+"Mapper");
+                velocityParameterMap.put("importBean","com.jd.jr.simpleconfig.domain." + (String) velocityParameterMap.get("className"));
+                velocityParameterMap.put("importService","com.jd.jr.simpleconfig.service." + (String) velocityParameterMap.get("className")+"Service");
+                velocityParameterMap.put("importMapper","com.jd.jr.simpleconfig.dao." + (String) velocityParameterMap.get("className")+"Mapper");
                 String str = renderVelocityTemplate(velocityParameterMap, fileConfig.getVelocityName());
                 String childPath = fileConfig.getSrcTargetChildPath();
                 if(fileConfig.getFileType().equals("java")){
-                    childPath = childPath +"\\"+ fileConfig.getPackagePath().replace(".", "/");
+                    childPath = childPath +"/"+ fileConfig.getPackagePath().replace(".", "/");
                 }
                 createFile(childPath, (String) velocityParameterMap.get("className") + fileConfig.getFileExtendName(), fileConfig.getFileType(), str);
             }
@@ -169,7 +169,7 @@ public class GeneratorCode {
 
 
 	public static void createFile(String childPath,String fileName, String fileType, String content) throws IOException {
-		File f = new File(globalConfig.getOutputPath()  + childPath+"\\"+fileName + "." + fileType);
+		File f = new File(globalConfig.getOutputPath()  + childPath+"/"+fileName + "." + fileType);
 		// WebUtil.writeToFile(outputPath+"src/"+ beanName.replace(".","/" )
 		// +".java", sb.toString());
 		if (!f.getParentFile().exists())

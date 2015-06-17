@@ -2,4 +2,4 @@ packagePath=
 velocityName=jspView.vm
 fileExtendName=View
 fileType=jsp
-srcTargetChildPath=insurance-yy-web/src/main/webapp/WEB-INF/jsp/view
+srcTargetChildPath=simpleConfigCenter-web/src/main/webapp/WEB-INF/jsp/view

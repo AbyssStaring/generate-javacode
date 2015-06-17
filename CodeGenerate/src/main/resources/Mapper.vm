@@ -1,8 +1,8 @@
 package $!{package};
 import $!{importBean};
 import java.util.List;
-import com.jd.bx.yy.util.PageQuery;
-import com.jd.bx.yy.util.Query;
+import com.jd.jr.simpleconfig.util.PageQuery;
+import com.jd.jr.simpleconfig.util.Query;
 
 public interface $!{className}Mapper{
 

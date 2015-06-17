@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
-import com.jd.bx.yy.util.PageQuery;
-import com.jd.bx.yy.util.Query;
+import com.jd.jr.simpleconfig.util.PageQuery;
+import com.jd.jr.simpleconfig.util.Query;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import com.jd.bx.yy.util.ErpException;
+import com.jd.jr.simpleconfig.util.ErpException;
 import org.springframework.dao.DuplicateKeyException;
 @Service("$!{instName}Service")
 public class $!{className}ServiceImpl implements $!{className}Service{

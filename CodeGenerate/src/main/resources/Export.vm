@@ -1,8 +1,8 @@
 package $!{package};
 import $!{importBean};
 import java.util.List;
-import com.jd.bx.yy.util.domain.query.PageQuery;
-import com.jd.bx.yy.util.domain.query.Query;
+import com.jd.jr.simpleconfig.util.domain.query.PageQuery;
+import com.jd.jr.simpleconfig.util.domain.query.Query;
 @Path("/$!{instName}/")
 @Consumes( { "application/json" })
 @Produces( { "application/json" })
