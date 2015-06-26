@@ -1,0 +1,6 @@
+
+*.zip
+
+CodeGenerate/.idea/.name
+
+CodeGenerate/.idea/artifacts/CodeGenerate_war_exploded.xml
