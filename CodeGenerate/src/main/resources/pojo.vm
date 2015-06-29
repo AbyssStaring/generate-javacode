@@ -24,25 +24,15 @@ public class $!className implements Serializable {
     /**
      * $!field.comment
      */
-    #if($field.jdbcType=="DATETIME"||$field.jdbcType=="DATE")
-        private String $!field.propertyName;
-        #else
+
 	    private $!field.javaType $!field.propertyName;
-        #end
+
 	
 #end
 	
 	
 #foreach($field in $fields)
-    #if($field.jdbcType=="DATETIME"||$field.jdbcType=="DATE")
-    public String $field.getGetterName()() {
-    return $field.propertyName;
-    }
 
-    public void $field.getSetterName()(String $!field.propertyName) {
-    this.$!field.propertyName = $!field.propertyName;
-    }
-        #else
 	public $!field.javaType $field.getGetterName()() {
 		return $field.propertyName;
 	}
@@ -50,7 +40,6 @@ public class $!className implements Serializable {
 	public void $field.getSetterName()($!field.javaType $!field.propertyName) {
 		this.$!field.propertyName = $!field.propertyName;
 	}
-        #end
 	
 #end
 
