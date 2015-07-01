@@ -3,11 +3,11 @@ package com.jd.code.generate.domain;
 public class Field {
 
     /*
-     * 转化为javabean的属�?
+     * 转化为javabean的属
      */
     private String propertyName;
     /*
-     * 数据库字�?
+     * 数据库字
      */
     private String fieldName;
     private String javaFullType;
@@ -16,6 +16,8 @@ public class Field {
     private String getterName;
     private String setterName;
     private String comment;
+
+    private Boolean indexFlag;//是否是索引字段
 
     private int length;
 
@@ -91,4 +93,11 @@ public class Field {
         this.comment = comment;
     }
 
+    public Boolean isIndexFlag() {
+        return indexFlag;
+    }
+
+    public void setIndexFlag(Boolean indexFlag) {
+        this.indexFlag = indexFlag;
+    }
 }

@@ -12,7 +12,17 @@
      <td>
           #if($field.jdbcType=="DATETIME"||$field.jdbcType=="DATE")
                 <input type="text" name="$!field.propertyName" class="form-control"    onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm'})"/>
-         #else
+              #elseif($field.indexFlag)
+
+
+                  <select name="$!field.propertyName" class="form-control" >
+                      <option value="">请选择$!field.comment</option>
+                      <c:forEach var="item" items="$\{$!field.propertyName}">
+                          <option value="${item.key}">${item.value}</option>
+                      </c:forEach>
+                  </select>
+
+          #else
                   <input type="text" name="$!field.propertyName" class="form-control"/>
              #end
   </td>

@@ -59,6 +59,10 @@ PageQuery<$!{className}> pageQuery = new PageQuery<$!{className}>();
     List<$!{className}> $!{instName}List = $!{instName}Service.queryBySelectiveForPagination(pageQuery);
         model.addAttribute("count", $!{instName}Service.queryCountBySelective(pageQuery));
         model.addAttribute("$!{instName}List", $!{instName}List);
+
+    #foreach($field in $indexFields)
+        model.addAttribute("$!field.propertyName", $!field.propertyName\\Map);
+    #end
         ConstantModel.loadRequestParameterMapToModel(model, request);
         return "jsp/list/$!{className}List";
         }

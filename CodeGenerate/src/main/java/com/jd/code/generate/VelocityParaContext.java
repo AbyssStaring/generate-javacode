@@ -2,6 +2,7 @@ package com.jd.code.generate;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multiset;
 import com.jd.code.generate.domain.Field;
 import com.jd.code.generate.util.Utils;
 
@@ -20,15 +21,19 @@ import static com.jd.code.generate.util.Utils.readProperties;
  */
 public class VelocityParaContext {
 
-      Map<String, Object> commonContext = new HashMap<String, Object>();
+    Map<String, Object> commonContext = new HashMap<String, Object>();
 
 
     static  Map<String, Field> fieldsMap = new HashMap<String, Field>();//key是表字段名字
+
+
+    static  Map<String, Field> indexfieldsMap = new HashMap<String, Field>();//key是表字段名字
 
     static Map<String,String> classNameMap = new HashMap<String,String>();//key是表名,value表示类名
     static Map<String,String> instNameMap = new HashMap<String,String>();//key是表名,value表示类的变量名
 
     static Map<String,String> camelFieldNameMap = new HashMap<String,String>();//key是表的字段名,value表示类的属性（用驼峰表示）
+
 
     static {
         readProperties("DB2ClassMapping/classNameMapping.properties", classNameMap);
@@ -101,17 +106,55 @@ public class VelocityParaContext {
             }
         }
         getMYSQLIndexField(conn, tableName);
+        setFieldIndexFlag(tableName, fields);
         getMYSQLTableComment(conn, tableName);
         commonContext.put(Constant.FIELDS, fields);
         commonContext.put(Constant.PK_TYPE, pkType);
         commonContext.put(Constant.IMPORTS, imports);
+        commonContext.put(Constant.indexFields, indexfieldsMap);
         commonContext.put(Constant.AUTHOR, "yangkuan@jd.com");
         commonContext.put("result", "result");
-
         commonContext.put(Constant.pk_JavaFullType, pkJavaFullType);
         return commonContext;
     }
 
+    /**
+     * 给字段添加是否是索引标记
+     * 对普通索引字段进行扫描，且普通索引只包含了一列，那么这列是打上索引标记
+     * @param tableName
+     * @param fields
+     */
+    private void setFieldIndexFlag( String tableName,List<Field> fields ) {
+        System.out.println(tableName+"给字段添加是否是索引标记start");
+        Multimap<String, Field> uniqueIndexMultiMap = (Multimap<String, Field>) commonContext.get(Constant.Unique_index);
+        Multimap<String, Field> commonIndexMultiMap = (Multimap<String, Field>) commonContext.get(Constant.Common_index);
+        for(Field field:fields){
+            Set<String> uniqueKeys = uniqueIndexMultiMap.keySet();
+            Set<String> commonKeys = commonIndexMultiMap.keySet();
+            /*for (String uniqueKey:uniqueKeys){
+                List<Field> uniquFields = (List<Field>) uniqueIndexMultiMap.get(uniqueKey);
+                if(uniquFields!=null&&uniquFields.size()==1){
+                    Field uniqueFiled = uniquFields.get(0);
+                    if(uniqueFiled.getFieldName().equals(field.getFieldName())){
+                        field.setIndexFlag(true);
+                        System.out.println(uniqueFiled.getFieldName());
+                    }
+                }
+            }*/
+            for (String commonKey:commonKeys){
+                List<Field> commonFields = (List<Field>) commonIndexMultiMap.get(commonKey);
+                if(commonFields!=null&&commonFields.size()==1){
+                    Field commonField = commonFields.get(0);
+                    if(commonField.getFieldName().equals(field.getFieldName())){
+                        field.setIndexFlag(true);
+                        System.out.println(commonField.getFieldName());
+                        indexfieldsMap.put(field.getPropertyName(),field);
+                    }
+                }
+            }
+        }
+        System.out.println(tableName+"给字段添加是否是索引标记end");
+    }
 
 
     private static String camelFieldName(String fieldName){
@@ -226,7 +269,7 @@ public class VelocityParaContext {
     }
 
     private static class Constant{
-       static   String CLASS_NAME = "className";
+        static   String CLASS_NAME = "className";
         static  String TABLE_NAME = "tableName";
         static  String INST_NAME = "instName";
         static  String TABLE_COMMENT = "tableComment";
@@ -242,5 +285,8 @@ public class VelocityParaContext {
 
         static  String Unique_index = "uniqueIndex";
         static  String Common_index = "commonIndex";
+
+        //存放普通索引且索引只包含一列的filed
+        static  String indexFields = "indexFields";
     }
 }
